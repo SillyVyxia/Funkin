@@ -633,18 +633,23 @@ class BaseCharacter extends Bopper
 
     // If another script cancelled the event, don't do anything.
     if (event.eventCanceled) return;
+    curNoteKind = NoteKindManager.getNoteKind(event.note.noteData.kind);
 
     if (event.note.noteData.getMustHitNote() && characterType == BF)
     {
       // If the note is from the same strumline, play the miss animation.
-      this.playSingAnimation(event.note.noteData.getDirection(), true);
-      holdTimer = 0;
+      if (!curNoteKind.nomissanim) {
+        this.playSingAnimation(event.note.noteData.getDirection(), true);
+        holdTimer = 0;
+      }
     }
     else if (!event.note.noteData.getMustHitNote() && characterType == DAD)
     {
       // If the note is from the same strumline, play the miss animation.
-      this.playSingAnimation(event.note.noteData.getDirection(), true);
-      holdTimer = 0;
+      if (!curNoteKind.nomissanim) {
+        this.playSingAnimation(event.note.noteData.getDirection(), true);
+        holdTimer = 0;
+      }
     }
     else if (event.note.noteData.getMustHitNote() && characterType == GF)
     {
